@@ -22,6 +22,7 @@ import * as echarts from '../../echarts';
 import * as zrUtil from 'zrender/src/core/util';
 
 var nodeOpacityPath = ['itemStyle', 'opacity'];
+var nodeLabelPath = ['label','name'];
 var hoverNodeOpacityPath = ['emphasis', 'itemStyle', 'opacity'];
 var lineOpacityPath = ['lineStyle', 'opacity'];
 var hoverLineOpacityPath = ['emphasis', 'lineStyle', 'opacity'];
@@ -241,13 +242,13 @@ export default echarts.extendChartView({
             });
 
             var hoverStyle = node.getModel('emphasis.itemStyle').getItemStyle();
-
+            var labelName = itemModel.getModel().get(nodeLabelPath)
             graphic.setLabelStyle(
                 rect.style, hoverStyle, labelModel, labelHoverModel,
                 {
                     labelFetcher: seriesModel,
                     labelDataIndex: node.dataIndex,
-                    defaultText: node.id,
+                    defaultText: labelName != null ? labelName: node.id,
                     isRectText: true
                 }
             );
